@@ -108,12 +108,6 @@ app.use(
 );
 app.use(bodyparser.json());
 
-// const url =
-//   "mongodb+srv://login:Tushar%40123%23@cluster0.otykb.mongodb.net/login-database?authSource=admin&replicaSet=atlas-kjissj-shard-0&w=majority&readPreference=primary&appname=MongoDB%20Compass&retryWrites=true&ssl=true";
-
-// const dbName = "login-database";
-// const client = new MongoClient(url);
-
 const table_path = path.join(__dirname, "Admin_panel/table");
 const style_path = path.join(__dirname, "Admin_panel/login");
 // const login_path = path.join(__dirname, "Admin_panel/login");
