@@ -4,11 +4,12 @@ const MongoClient = require("mongodb").MongoClient;
 const assert = require("assert");
 const router = express.Router();
 const dotenv = require("dotenv").config();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 
-const url = process.env.MONGBDO_URL;
+const url =
+  "mongodb+srv://login:Tushar%40123%23@cluster0.otykb.mongodb.net/login-database?authSource=admin&replicaSet=atlas-kjissj-shard-0&w=majority&readPreference=primary&appname=MongoDB%20Compass&retryWrites=true&ssl=true";
 
-const dbName = process.env.MONGODB_NAME;
+const dbName = "login-database";
 const client = new MongoClient(url);
 
 const username = "admin@gmail.com";

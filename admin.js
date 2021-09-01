@@ -14,7 +14,7 @@ const controller = require("./controller/controller");
 
 app.use(
   bodyparser.urlencoded({
-    extended: true,
+    extended: false,
   })
 );
 app.use(bodyparser.json());
