@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+      crossorigin="anonymous"
+    />
+
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,300i,500"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/fixedheader/3.1.7/css/fixedHeader.bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href=" https://cdn.datatables.net/responsive/2.2.6/css/responsive.bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <a href="/logout"
+      ><i class="fa fa-sign-out" aria-hidden="true">logout</i></a
+    >
+
+    <table class="table" id="example">
+      <thead>
+        <tr>
+          <th scope="col">FirstNam</th>
+          <th scope="col">Lastname</th>
+          <th scope="col">Email</th>
+          <th scope="col">Contact</th>
+          <th scope="col">City</th>
+          <th scope="col">Age</th>
+          <th scope="col">Time</th>
+          <th scope="col">Day</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% users.forEach((users)=>{%>
+        <tr>
+          <td><%=users.firstname%></td>
+          <td><%=users.lastname%></td>
+          <td><%=users.email%></td>
+          <td><%=users.contact%></td>
+          <td><%=users.city%></td>
+          <td><%=users.age%></td>
+          <td>
+            <%=users.createdAt.getHours() %>:<%=users.createdAt.getMinutes()
+            %>:<%=users.createdAt.getSeconds() %>
+          </td>
+          <td><%=users.updatedAt.toDateString()%></td>
+        </tr>
+        <%})%>
+      </tbody>
+    </table>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.1.7/js/dataTables.fixedHeader.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.6/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.6/js/responsive.bootstrap.min.js  "></script>
+
+    <script>
+      $(document).ready(function () {
+        var table = $("#example").DataTable({
+          responsive: true,
+        });
+
+        new $.fn.dataTable.FixedHeader(table);
+      });
+    </script>
+  </body>
+</html>
