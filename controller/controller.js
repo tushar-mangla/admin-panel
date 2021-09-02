@@ -20,26 +20,37 @@ const client = new MongoClient(url);
 const username = "admin@gmail.com";
 const pass = "admin@123#";
 
+const user = [];
+
+user.push({
+  email: "admin@gmail.com",
+  password: "admin@123# ",
+});
+
+console.log(user.email);
+
 const reqDetails = { email: "", password: "" };
 
-initPassport(passport, (email) => username);
+initPassport(
+  passport,
+  (email) => user.find((user) => user.email === email),
+  (password) => user.find((user) => user.password === password)
+);
 
-router.get("/", async (req, res) => {
+router.get("/", checkNotAuthenticated, async (req, res) => {
   res.render("login");
 });
 
 router.post(
   "/",
+  checkNotAuthenticated,
   passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/login",
+    successRedirect: "/data",
+    failureRedirect: "/",
     failureFlash: true,
   }),
   async (req, res) => {
     try {
-      const hashedPass = await bcrypt.hash(req.body.password, 10);
-      reqDetails.email = req.body.email;
-      reqDetails.password = hashedPass;
       res.redirect("/data");
     } catch (e) {
       res.status(400).send(e);
@@ -47,33 +58,27 @@ router.post(
   }
 );
 
-router.get("/data", async (req, res) => {
+router.get("/data", checkAuthenticated, async (req, res) => {
   try {
-    if (reqDetails.email === username && reqDetails.password === pass) {
-      const db = client.db(dbName);
-      const collection = db.collection("users");
+    const db = client.db(dbName);
+    const collection = db.collection("users");
 
-      collection.find({}).toArray((err, data) => {
-        assert.equal(err, null);
-        res.render("index", { users: data });
-      });
-    } else {
-      // console.log(`${reqDetails.email} and pass is ${reqDetails.password}`);
-      res.status(403).redirect("/");
-    }
+    collection.find({}).toArray((err, data) => {
+      assert.equal(err, null);
+      res.render("index", { users: data });
+    });
   } catch (e) {
     console.log(e);
-    res.status(400).redirect("/");
+    res.status(400).render("login");
   }
 });
 
-router.get("/logout", async (req, res) => {
+router.delete("/logout", async (req, res) => {
   try {
-    reqDetails.email = "";
-    reqDetails.password = "";
+    req.logOut();
     res.redirect("/");
   } catch (e) {
-    res.status(400).send(e);
+    res.status(400).send("sddv");
   }
 });
 
@@ -82,11 +87,19 @@ client.connect((err) => {
   console.log("Connected successfully to mongo data");
 });
 
-// function checkAuthenticated(req, res, next) {
-//   if (req.isAuthenticated()) {
-//     next();
-//   }
-//   res.redirect("/");
-// }
+function checkAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect("/");
+}
+
+function checkNotAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return res.redirect("/data");
+  }
+
+  next();
+}
 
 module.exports = router;

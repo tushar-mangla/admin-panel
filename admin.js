@@ -16,6 +16,7 @@ const passport = require("passport");
 const initPassport = require("./passport-config");
 const flash = require("express-flash");
 const session = require("express-session");
+const methodOverride = require("method-override");
 
 app.use(
   bodyparser.urlencoded({
@@ -41,6 +42,7 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(methodOverride("_method"));
 
 const schema = {
   firstname: String,
@@ -55,4 +57,4 @@ app.listen(port, function () {
   console.log(`Server is running on ${port}`);
 });
 
-app.use(controller);
+app.use("/", controller);
