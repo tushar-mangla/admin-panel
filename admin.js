@@ -12,6 +12,10 @@ const port = process.env.PORT || 3000;
 const router = express.Router();
 const bodyparser = require("body-parser");
 const controller = require("./controller/controller");
+const passport = require("passport");
+const initPassport = require("./passport-config");
+const flash = require("express-flash");
+const session = require("express-session");
 
 app.use(
   bodyparser.urlencoded({
@@ -26,6 +30,17 @@ const style_path = path.join(__dirname, "Admin_panel/login");
 app.set("view engine", "ejs");
 app.use(express.static(style_path));
 app.set("views", table_path);
+app.use(flash());
+app.use(
+  session({
+    secret: "secret",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 const schema = {
   firstname: String,

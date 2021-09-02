@@ -2,8 +2,13 @@ const express = require("express");
 const mongoose = require("mongoose");
 const MongoClient = require("mongodb").MongoClient;
 const assert = require("assert");
+const bcrypt = require("bcrypt");
 const router = express.Router();
 const dotenv = require("dotenv").config();
+const passport = require("passport");
+const initPassport = require("../passport-config");
+const flash = require("express-flash");
+const session = require("express-session");
 const port = process.env.PORT || 3000;
 
 const url =
@@ -17,19 +22,30 @@ const pass = "admin@123#";
 
 const reqDetails = { email: "", password: "" };
 
+initPassport(passport, (email) => username);
+
 router.get("/", async (req, res) => {
   res.render("login");
 });
 
-router.post("/", async (req, res) => {
-  try {
-    reqDetails.email = req.body.email;
-    reqDetails.password = req.body.password;
-    res.redirect("/data");
-  } catch (e) {
-    res.status(400).send(e);
+router.post(
+  "/",
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/login",
+    failureFlash: true,
+  }),
+  async (req, res) => {
+    try {
+      const hashedPass = await bcrypt.hash(req.body.password, 10);
+      reqDetails.email = req.body.email;
+      reqDetails.password = hashedPass;
+      res.redirect("/data");
+    } catch (e) {
+      res.status(400).send(e);
+    }
   }
-});
+);
 
 router.get("/data", async (req, res) => {
   try {
@@ -65,5 +81,12 @@ client.connect((err) => {
   assert.equal(null, err);
   console.log("Connected successfully to mongo data");
 });
+
+// function checkAuthenticated(req, res, next) {
+//   if (req.isAuthenticated()) {
+//     next();
+//   }
+//   res.redirect("/");
+// }
 
 module.exports = router;
