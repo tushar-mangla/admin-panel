@@ -1,28 +1,35 @@
 const Localstrategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt");
 
-function init(passport, getUserByEmail, getUserByPass) {
+function init(passport, getUserByEmail, getUserById) {
   const authenticateUser = async (email, password, done) => {
     const user = getUserByEmail(email);
-    // console.log(user);
+    // const pass = getUserByEmail(password);
+    // console.log(pass);
+
+    // console.log(password);
+    // console.log(user.password);
+    // console.log(user.id);
+    // console.log("ervrv");
+
     if (user == null) {
       return done(null, false, { message: "No admin with that email" });
     }
 
-    try {
-      console.log(password);
+    // bcrypt.compare(password, user.password, (err, isMatch) => {
+    //   if (err) throw err;
+    //   if (isMatch) {
+    //     return done(null, user);
+    //   } else {
+    //     return done(null, false, { message: "Password incorrect" });
+    //   }
+    // });
+    else if (user.password == password) {
+      return done(null, user);
+    } else {
       console.log(user.password);
-      console.log("rrvrv");
-      if (user.password == password) {
-        // console.log(user.password, "eve");
-        // console.log(password);
-        return done(null, user);
-      } else {
-        console.log("dvvfvfvfv");
-        return done(null, false, { message: "Password incoorect" });
-      }
-    } catch (e) {
-      return done(`fdfbfbbfb ${e}`);
+      console.log(password);
+      return done(null, false, { message: "Password incoorect" });
     }
   };
 
@@ -34,9 +41,9 @@ function init(passport, getUserByEmail, getUserByPass) {
       authenticateUser
     )
   );
-  passport.serializeUser((user, done) => done(null, user.password));
-  passport.deserializeUser((pass, done) => {
-    return done(null, getUserByPass(pass));
+  passport.serializeUser((user, done) => done(null, user.id));
+  passport.deserializeUser((id, done) => {
+    return done(null, getUserById(id));
   });
 }
 

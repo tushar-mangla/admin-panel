@@ -17,24 +17,26 @@ const url =
 const dbName = "login-database";
 const client = new MongoClient(url);
 
-const username = "admin@gmail.com";
-const pass = "admin@123#";
+// const username = "admin@gmail.com";
+// var pass = "admin@123#";
+// pass = bcrypt.hash(pass, 10);
 
 const user = [];
 
 user.push({
+  id: Date.now().toString(),
   email: "admin@gmail.com",
-  password: "admin@123# ",
+  password: "admin@123#",
 });
 
-console.log(user.email);
+// console.log(user.email);
 
-const reqDetails = { email: "", password: "" };
+// const reqDetails = { email: "", password: "" };
 
 initPassport(
   passport,
   (email) => user.find((user) => user.email === email),
-  (password) => user.find((user) => user.password === password)
+  (id) => user.find((user) => user.id === id)
 );
 
 router.get("/", checkNotAuthenticated, async (req, res) => {
@@ -48,14 +50,14 @@ router.post(
     successRedirect: "/data",
     failureRedirect: "/",
     failureFlash: true,
-  }),
-  async (req, res) => {
-    try {
-      res.redirect("/data");
-    } catch (e) {
-      res.status(400).send(e);
-    }
-  }
+  })
+  // async (req, res) => {
+  //   try {
+  //     res.redirect("/data");
+  //   } catch (e) {
+  //     res.status(400).send(e);
+  //   }
+  // }
 );
 
 router.get("/data", checkAuthenticated, async (req, res) => {
@@ -68,7 +70,6 @@ router.get("/data", checkAuthenticated, async (req, res) => {
       res.render("index", { users: data });
     });
   } catch (e) {
-    console.log(e);
     res.status(400).render("login");
   }
 });

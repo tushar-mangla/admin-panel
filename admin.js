@@ -31,27 +31,28 @@ const style_path = path.join(__dirname, "Admin_panel/login");
 app.set("view engine", "ejs");
 app.use(express.static(style_path));
 app.set("views", table_path);
-app.use(flash());
+
 app.use(
   session({
     secret: "secret",
-    resave: false,
-    saveUninitialized: false,
+    resave: true,
+    saveUninitialized: true,
   })
 );
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 app.use(methodOverride("_method"));
 
-const schema = {
-  firstname: String,
-  lastname: String,
-  email: String,
-  contact: Number,
-  city: String,
-  age: Number,
-};
+// const schema = {
+//   firstname: String,
+//   lastname: String,
+//   email: String,
+//   contact: Number,
+//   city: String,
+//   age: Number,
+// };
 
 app.listen(port, function () {
   console.log(`Server is running on ${port}`);
