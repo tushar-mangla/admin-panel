@@ -4,26 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-      crossorigin="anonymous"
-    />
-
-    <link
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-
-    <link
-      href="https://fonts.googleapis.com/css?family=Roboto:300,300i,500"
-      rel="stylesheet"
-    />
-
-    <link
-      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-      rel="stylesheet"
     />
     <link
       rel="stylesheet"
@@ -37,18 +21,84 @@
       rel="stylesheet"
       href=" https://cdn.datatables.net/responsive/2.2.6/css/responsive.bootstrap.min.css"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <!-- <link rel="stylesheet" href="style.css" /> -->
+    <style>
+      .navbar {
+        background-color: #696969;
+        /* border-radius: 30px; */
+      }
+      .navbar ul {
+        overflow: auto;
+      }
+      .navbar li {
+        float: left;
+        list-style: none;
+        margin: 13px 20px;
+      }
+      .navbar li a {
+        padding: 3px 3px;
+        text-decoration: none;
+        color: white;
+      }
+      .navbar li a:hover {
+        color: #337ab7;
+      }
+      .search {
+        float: right;
+        color: #337ab7;
+        padding: 12px 75px;
+      }
+      .button {
+        background-color: #337ab7;
+        border: none;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 10px;
+        margin: 3px 1px;
+      }
+      .button4 {
+        border-radius: 6px;
+      }
+      .data {
+        text-align: center;
+      }
+    </style>
   </head>
   <body>
-    <form action="/logout?_method=DELETE" method="POST">
-      <i class="fa fa-sign-out" aria-hidden="true"
-        ><button type="submit">logout</button></i
-      >
-    </form>
+    <header>
+      <nav class="navbar">
+        <ul>
+          <li><a href="#">Admin</a></li>
+          <li>
+            <a href="https://landing-login-page.herokuapp.com/">Website</a>
+          </li>
 
-    <table class="table" id="example">
+          <div class="search">
+            <form action="/logout?_method=DELETE" method="POST">
+              <a type="submit">
+                <i class="fa fa-sign-out" aria-hidden="true"></i
+                ><button class="button button4">Logout</button>
+              </a>
+              <!-- <a>Logout</a> -->
+            </form>
+          </div>
+        </ul>
+      </nav>
+    </header>
+
+    <h1 class="data">Data Table</h1>
+
+    <table class="table table-hover" id="example">
       <thead>
         <tr>
-          <th scope="col">FirstNam</th>
+          <th scope="col">FirstName</th>
           <th scope="col">Lastname</th>
           <th scope="col">Email</th>
           <th scope="col">Contact</th>
@@ -71,12 +121,31 @@
             <%=users.createdAt.getHours() %>:<%=users.createdAt.getMinutes()
             %>:<%=users.createdAt.getSeconds() %>
           </td>
-          <td><%=users.updatedAt.toDateString()%></td>
+          <td>
+            <%=users.createdAt.getFullYear()%>- <%=users.createdAt.getMonth() +
+            1%>-<%=users.createdAt.getDate()%>
+          </td>
         </tr>
         <%})%>
       </tbody>
     </table>
 
+    <script
+      src="http://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+      integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap.min.js"></script>
@@ -93,5 +162,6 @@
         new $.fn.dataTable.FixedHeader(table);
       });
     </script>
+    <script src="table.js"></script>
   </body>
 </html>

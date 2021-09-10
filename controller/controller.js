@@ -17,10 +17,6 @@ const url =
 const dbName = "login-database";
 const client = new MongoClient(url);
 
-// const username = "admin@gmail.com";
-// var pass = "admin@123#";
-// pass = bcrypt.hash(pass, 10);
-
 const user = [];
 
 user.push({

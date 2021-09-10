@@ -27,8 +27,8 @@ function init(passport, getUserByEmail, getUserById) {
     else if (user.password == password) {
       return done(null, user);
     } else {
-      console.log(user.password);
-      console.log(password);
+      // console.log(user.password);
+      // console.log(password);
       return done(null, false, { message: "Password incoorect" });
     }
   };
