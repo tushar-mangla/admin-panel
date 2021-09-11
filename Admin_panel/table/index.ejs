@@ -94,42 +94,42 @@
     </header>
 
     <h1 class="data">Data Table</h1>
-
-    <table class="table table-hover" id="example">
-      <thead>
-        <tr>
-          <th scope="col">FirstName</th>
-          <th scope="col">Lastname</th>
-          <th scope="col">Email</th>
-          <th scope="col">Contact</th>
-          <th scope="col">City</th>
-          <th scope="col">Age</th>
-          <th scope="col">Time</th>
-          <th scope="col">Day</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% users.forEach((users)=>{%>
-        <tr>
-          <td><%=users.firstname%></td>
-          <td><%=users.lastname%></td>
-          <td><%=users.email%></td>
-          <td><%=users.contact%></td>
-          <td><%=users.city%></td>
-          <td><%=users.age%></td>
-          <td>
-            <%=users.createdAt.getHours() %>:<%=users.createdAt.getMinutes()
-            %>:<%=users.createdAt.getSeconds() %>
-          </td>
-          <td>
-            <%=users.createdAt.getFullYear()%>- <%=users.createdAt.getMonth() +
-            1%>-<%=users.createdAt.getDate()%>
-          </td>
-        </tr>
-        <%})%>
-      </tbody>
-    </table>
-
+    <div class="table-responsive">
+      <table class="table table-hover" id="example">
+        <thead>
+          <tr>
+            <th scope="col">FirstName</th>
+            <th scope="col">Lastname</th>
+            <th scope="col">Email</th>
+            <th scope="col">Contact</th>
+            <th scope="col">City</th>
+            <th scope="col">Age</th>
+            <th scope="col">Time</th>
+            <th scope="col">Day</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% users.forEach((users)=>{%>
+          <tr>
+            <td><%=users.firstname%></td>
+            <td><%=users.lastname%></td>
+            <td><%=users.email%></td>
+            <td><%=users.contact%></td>
+            <td><%=users.city%></td>
+            <td><%=users.age%></td>
+            <td>
+              <%=users.createdAt.getHours() %>:<%=users.createdAt.getMinutes()
+              %>:<%=users.createdAt.getSeconds() %>
+            </td>
+            <td>
+              <%=users.createdAt.getFullYear()%>- <%=users.createdAt.getMonth() +
+              1%>-<%=users.createdAt.getDate()%>
+            </td>
+          </tr>
+          <%})%>
+        </tbody>
+      </table>
+  </div>
     <script
       src="http://code.jquery.com/jquery-3.3.1.min.js"
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
